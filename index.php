@@ -10,7 +10,7 @@ $loader = new Loader();
 
 $loader->registerNamespaces(
     [
-        'Useria\Users' => __DIR__ . '/models/',
+        'Useria' => __DIR__ . '/models/',
     ]
 );
 
@@ -39,8 +39,21 @@ $app = new Micro($di);
 // Retrieves all users
 $app->get(
     '/api/users',
-    function () {
-        // Operation to fetch all the users
+    function () use ($app) {
+        $phql = 'SELECT * FROM Useria\Users ORDER BY name';
+
+        $robots = $app->modelsManager->executeQuery($phql);
+
+        $data = [];
+
+        foreach ($robots as $robot) {
+            $data[] = [
+                'id'   => $robot->id,
+                'name' => $robot->name,
+            ];
+        }
+
+        echo json_encode($data);
     }
     
 );

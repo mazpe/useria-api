@@ -1,6 +1,6 @@
 <?php
 
-namespace Useria\Users;
+namespace Useria;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Message;
@@ -8,7 +8,7 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 use Phalcon\Validation\Validator\InclusionIn;
 
-class Robots extends Model
+class Users extends Model
 {
     public function validation()
     {

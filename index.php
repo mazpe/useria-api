@@ -50,6 +50,8 @@ $app->get(
             $data[] = [
                 'id'   => $user->id,
                 'name' => $user->name,
+                'username' => $user->username,
+                'description' => $user->description
             ];
         }
 
@@ -62,12 +64,16 @@ $app->get(
 $app->get(
     '/api/users/search/{name}',
     function ($name) use ($app) {
-        $phql = 'SELECT * FROM Useria\Users WHERE name LIKE :name: ORDER BY name';
+        $phql = 'SELECT * FROM Useria\Users 
+        WHERE name LIKE :name: 
+        OR username LIKE :name:
+        OR description LIKE :name:
+        ORDER BY name';
 
         $users = $app->modelsManager->executeQuery(
             $phql,
             [
-                'name' => '%' . $name . '%'
+                'name'      => '%' . $name . '%'
             ]
         );
 
@@ -77,6 +83,8 @@ $app->get(
             $data[] = [
                 'id'   => $user->id,
                 'name' => $user->name,
+                'username' => $user->username,
+                'description' => $user->description
             ];
         }
 

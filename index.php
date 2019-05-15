@@ -42,14 +42,14 @@ $app->get(
     function () use ($app) {
         $phql = 'SELECT * FROM Useria\Users ORDER BY name';
 
-        $robots = $app->modelsManager->executeQuery($phql);
+        $users = $app->modelsManager->executeQuery($phql);
 
         $data = [];
 
-        foreach ($robots as $robot) {
+        foreach ($users as $user) {
             $data[] = [
-                'id'   => $robot->id,
-                'name' => $robot->name,
+                'id'   => $user->id,
+                'name' => $user->name,
             ];
         }
 
@@ -61,8 +61,26 @@ $app->get(
 // Searches for users with $name in their name
 $app->get(
     '/api/users/search/{name}',
-    function ($name) {
-        // Operation to fetch user with name $name
+    function ($name) use ($app) {
+        $phql = 'SELECT * FROM Useria\Users WHERE name LIKE :name: ORDER BY name';
+
+        $users = $app->modelsManager->executeQuery(
+            $phql,
+            [
+                'name' => '%' . $name . '%'
+            ]
+        );
+
+        $data = [];
+
+        foreach ($users as $user) {
+            $data[] = [
+                'id'   => $user->id,
+                'name' => $user->name,
+            ];
+        }
+
+        echo json_encode($data);
     }
 );
 

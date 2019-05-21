@@ -115,3 +115,20 @@ Output
     }
 }
 ```
+
+### Update a user 
+#### PUT /api/users
+Update a user 
+
+Test
+```
+curl -i -X PUT -d '{"name":"Steve","username":"steveUpdated","description":"testing api crease"}'
+    http://localhost/my-rest-api/api/robots
+```
+
+Output
+```
+{
+    "status": "OK"
+}
+```

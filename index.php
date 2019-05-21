@@ -192,8 +192,50 @@ $app->post(
 // Updates users based on primary key
 $app->put(
     '/api/users/{id:[0-9]+}',
-    function ($id) {
-        // Operation to update a user with id $id
+    function ($id) use ($app) {
+        $user = $app->request->getJsonRawBody();
+
+        $phql = 'UPDATE Useria\Users SET name = :name:, username = :username:, description = :description: WHERE id = :id:';
+
+        $status = $app->modelsManager->executeQuery(
+            $phql,
+            [
+                'id'            => $id,
+                'name'          => $user->name,
+                'username'      => $user->username,
+                'description'   => $user->description,
+            ]
+        );
+
+        // Create a response
+        $response = new Response();
+
+        // Check if the insertion was successful
+        if ($status->success() === true) {
+            $response->setJsonContent(
+                [
+                    'status' => 'OK'
+                ]
+            );
+        } else {
+            // Change the HTTP status
+            $response->setStatusCode(409, 'Conflict');
+
+            $errors = [];
+
+            foreach ($status->getMessages() as $message) {
+                $errors[] = $message->getMessage();
+            }
+
+            $response->setJsonContent(
+                [
+                    'status'   => 'ERROR',
+                    'messages' => $errors,
+                ]
+            );
+        }
+
+        return $response;
     }
 );
 

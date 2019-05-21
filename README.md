@@ -100,7 +100,7 @@ Create a user
 Test
 ```
 curl -i -X POST -d '{"name":"Steve","username":"steve1","description":"testing api crease"}'
-    http://localhost/my-rest-api/api/robots
+    http://pahlcon:8888/useria-api/api/users
 ```
 
 Output
@@ -117,13 +117,29 @@ Output
 ```
 
 ### Update a user 
-#### PUT /api/users
+#### PUT /api/users/11
 Update a user 
 
 Test
 ```
 curl -i -X PUT -d '{"name":"Steve","username":"steveUpdated","description":"testing api crease"}'
-    http://localhost/my-rest-api/api/robots
+    http://pahlcon:8888/useria-api/api/users/11
+```
+
+Output
+```
+{
+    "status": "OK"
+}
+```
+
+### Delete a user 
+#### DELETE /api/users/11
+Update a user 
+
+Test
+```
+curl -i -X DELETE http://pahlcon:8888/useria-api/api/users/11
 ```
 
 Output

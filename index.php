@@ -242,8 +242,44 @@ $app->put(
 // Deletes users based on primary key
 $app->delete(
     '/api/users/{id:[0-9]+}',
-    function ($id) {
-        // Operation to delete the user with id $id
+    function ($id) use ($app) {
+        $phql = 'DELETE FROM Useria\Users WHERE id = :id:';
+
+        $status = $app->modelsManager->executeQuery(
+            $phql,
+            [
+                'id' => $id,
+            ]
+        );
+
+        // Create a response
+        $response = new Response();
+
+        if ($status->success() === true) {
+            $response->setJsonContent(
+                [
+                    'status' => 'OK'
+                ]
+            );
+        } else {
+            // Change the HTTP status
+            $response->setStatusCode(409, 'Conflict');
+
+            $errors = [];
+
+            foreach ($status->getMessages() as $message) {
+                $errors[] = $message->getMessage();
+            }
+
+            $response->setJsonContent(
+                [
+                    'status'   => 'ERROR',
+                    'messages' => $errors,
+                ]
+            );
+        }
+
+        return $response;
     }
 );
 

@@ -20,7 +20,7 @@ class Users extends Model
             new InclusionIn(
                 [
                     'message' => 'Type must be "master", "admin", or "user"',
-                    'domain' => [
+                    'domain'  => [
                         'master',
                         'admin',
                         'user',

@@ -21,25 +21,29 @@ Output
         "id":"1",
         "name":"John",
         "username":"johnsmith",
-        "description":"first test user"
+        "description":"first test user",
+        "type":""
     },
     {
         "id":"4",
         "name":"Steven",
         "username":"stevenuser",
-        "description":""
+        "description":"",
+        "type":""
         },
     {
         "id":"2",
         "name":"Test User",
         "username":"username",
-        "description":""
+        "description":"",
+        "type":""
         },
     {
         "id":"3",
         "name":"User",
         "username":"testUser",
-        "description":""
+        "description":"",
+        "type":""
         }
 ]
 ```
@@ -60,13 +64,15 @@ Output
         "id":"2",
         "name":"Test User",
         "username":"username",
-        "description":""
+        "description":"",
+        "type":""
     },
     {
         "id":"3",
         "name":"User",
         "username":"testUser",
-        "description":""
+        "description":"",
+        "type":""
     }
 ]
 ```
@@ -88,7 +94,8 @@ Output
         "id": "1",
         "name": "John",
         "username": "johnsmith",
-        "description": "first test user"
+        "description": "first test user",
+        "type":""
     }
 }
 ```
@@ -99,7 +106,7 @@ Create a user
 
 Test
 ```
-curl -i -X POST -d '{"name":"Steve","username":"steve1","description":"testing api crease"}'
+curl -i -X POST -d '{"name":"Steve","username":"steve1","description":"testing api crease","type":"user"}'
     http://pahlcon:8888/useria-api/api/users
 ```
 
@@ -122,7 +129,7 @@ Update a user
 
 Test
 ```
-curl -i -X PUT -d '{"name":"Steve","username":"steveUpdated","description":"testing api crease"}'
+curl -i -X PUT -d '{"name":"Steve","username":"steveUpdated","description":"testing api crease","type":"user"}'
     http://pahlcon:8888/useria-api/api/users/11
 ```
 

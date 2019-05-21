@@ -48,8 +48,6 @@ class Users extends Model
         }
 
         // Check if any messages have been produced
-        if ($this->validationHasFailed() === true) {
-            return false;
-        }
+        return $this->validate($validator);
     }
 }

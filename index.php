@@ -49,10 +49,11 @@ $app->get(
 
         foreach ($users as $user) {
             $data[] = [
-                'id'   => $user->id,
-                'name' => $user->name,
-                'username' => $user->username,
-                'description' => $user->description
+                'id'            => $user->id,
+                'name'          => $user->name,
+                'username'      => $user->username,
+                'description'   => $user->description,
+                'type'          => $user->type
             ];
         }
 
@@ -69,6 +70,7 @@ $app->get(
         WHERE name LIKE :name: 
         OR username LIKE :name:
         OR description LIKE :name:
+        OR type LIKE :name:
         ORDER BY name';
 
         $users = $app->modelsManager->executeQuery(
@@ -82,10 +84,11 @@ $app->get(
 
         foreach ($users as $user) {
             $data[] = [
-                'id'   => $user->id,
-                'name' => $user->name,
-                'username' => $user->username,
-                'description' => $user->description
+                'id'            => $user->id,
+                'name'          => $user->name,
+                'username'      => $user->username,
+                'description'   => $user->description,
+                'type'          => $user->type
             ];
         }
 
@@ -120,10 +123,11 @@ $app->get(
                 [
                     'status' => 'FOUND',
                     'data'   => [
-                        'id'   => $user->id,
-                        'name' => $user->name,
-                        'username' => $user->username,
-                        'description' => $user->description
+                        'id'            => $user->id,
+                        'name'          => $user->name,
+                        'username'      => $user->username,
+                        'description'   => $user->description,
+                        'type'          => $user->type
                     ]
                 ]
             );
@@ -139,14 +143,15 @@ $app->post(
     function () use ($app) {
         $user = $app->request->getJsonRawBody();
 
-        $phql = 'INSERT INTO Useria\Users (name, username, description) VALUES (:name:, :username:, :description:)';
+        $phql = 'INSERT INTO Useria\Users (name, username, description, type) VALUES (:name:, :username:, :description:, :type:)';
 
         $status = $app->modelsManager->executeQuery(
             $phql,
             [
                 'name'          => $user->name,
                 'username'      => $user->username,
-                'description'   => $user->description
+                'description'   => $user->description,
+                'type'          => $user->type
             ]
         );
 
@@ -195,15 +200,16 @@ $app->put(
     function ($id) use ($app) {
         $user = $app->request->getJsonRawBody();
 
-        $phql = 'UPDATE Useria\Users SET name = :name:, username = :username:, description = :description: WHERE id = :id:';
+        $phql = 'UPDATE Useria\Users SET name = :name:, username = :username:, description = :description:, type = :type: WHERE id = :id:';
 
         $status = $app->modelsManager->executeQuery(
             $phql,
             [
-                'id'            => $id,
+                'id'            => $user->id,
                 'name'          => $user->name,
                 'username'      => $user->username,
                 'description'   => $user->description,
+                'type'          => $user->type
             ]
         );
 
